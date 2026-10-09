@@ -1,0 +1,62 @@
+[
+  {
+    "id": "Q01",
+    "title": "Household members and derived ages",
+    "sql": "SELECT h.name AS household, u.user_id, u.name AS member,\n       TRUNC(MONTHS_BETWEEN(SYSDATE, u.dob) / 12) AS age\nFROM PF_HOUSEHOLD h JOIN PF_USERS u ON u.household_id = h.household_id\nORDER BY h.name, u.name"
+  },
+  {
+    "id": "Q02",
+    "title": "Account owners, banks and balances",
+    "sql": "SELECT a.account_id, a.owner_name, a.owner_type,\n       a.bank_name, a.acc_type, a.balance\nFROM PF_ACCOUNT_OVERVIEW a\nORDER BY a.account_id"
+  },
+  {
+    "id": "Q03",
+    "title": "Investment portfolio and market values",
+    "sql": "SELECT u.name AS investor, c.name AS company,\n       s.share_id, us.quantity, s.market_price,\n       us.quantity * s.market_price AS holding_value\nFROM PF_USER_SHARES us\nJOIN PF_USERS u ON u.user_id = us.user_id\nJOIN PF_SHARES s ON s.share_id = us.share_id\nJOIN PF_COMPANY c ON c.company_id = s.company_id\nORDER BY u.name, c.name"
+  },
+  {
+    "id": "Q04",
+    "title": "Total spending by expense category",
+    "sql": "SELECT c.name AS category, COUNT(*) AS transaction_count,\n       SUM(t.amount) AS total_spent\nFROM PF_TRANSACTION t JOIN PF_CATEGORY c ON c.category_id = t.category_id\nWHERE t.trans_type = 'EXPENSE'\nGROUP BY c.name\nORDER BY total_spent DESC"
+  },
+  {
+    "id": "Q05",
+    "title": "Accounts above average balance",
+    "sql": "SELECT a.account_id, a.balance\nFROM PF_ACCOUNT a\nWHERE a.balance > (SELECT AVG(balance) FROM PF_ACCOUNT)\nORDER BY a.balance DESC"
+  },
+  {
+    "id": "Q06",
+    "title": "Savings goal progress using PL/SQL function",
+    "sql": "SELECT g.goal_id, c.name AS goal_category,\n       g.current_amt, g.target_amt,\n       PF_GOAL_PROGRESS(g.goal_id) AS progress_percent\nFROM PF_GOAL g JOIN PF_CATEGORY c ON c.category_id = g.category_id\nORDER BY progress_percent DESC"
+  },
+  {
+    "id": "Q07",
+    "title": "Monthly-equivalent subscription cost per account",
+    "sql": "SELECT a.account_id, COUNT(s.subscription_id) AS subscriptions,\n       ROUND(SUM(CASE s.bill_cycle\n           WHEN 'WEEKLY' THEN s.amount * 52 / 12\n           WHEN 'MONTHLY' THEN s.amount\n           WHEN 'YEARLY' THEN s.amount / 12\n       END), 2) AS monthly_equivalent\nFROM PF_ACCOUNT a JOIN PF_SUBSCRIPTION s ON s.account_id = a.account_id\nGROUP BY a.account_id\nORDER BY monthly_equivalent DESC"
+  },
+  {
+    "id": "Q08",
+    "title": "Companies and employee counts (includes zero)",
+    "sql": "SELECT c.company_id, c.name AS company,\n       COUNT(u.user_id) AS employee_count\nFROM PF_COMPANY c LEFT JOIN PF_USERS u ON u.employer_company_id = c.company_id\nGROUP BY c.company_id, c.name\nORDER BY employee_count DESC, c.name"
+  },
+  {
+    "id": "Q09",
+    "title": "Largest expense of each account (correlated subquery)",
+    "sql": "SELECT t.account_id, t.trans_id, t.amount, c.name AS category\nFROM PF_TRANSACTION t JOIN PF_CATEGORY c ON c.category_id = t.category_id\nWHERE t.trans_type = 'EXPENSE'\n  AND t.amount = (\n      SELECT MAX(x.amount) FROM PF_TRANSACTION x\n      WHERE x.account_id = t.account_id AND x.trans_type = 'EXPENSE'\n  )\nORDER BY t.account_id, t.trans_id"
+  },
+  {
+    "id": "Q10",
+    "title": "Monthly personal income and expenses",
+    "sql": "SELECT u.name AS user_name, TO_CHAR(t.trans_date, 'YYYY-MM') AS period_month,\n       SUM(CASE WHEN t.trans_type = 'INCOME' THEN t.amount ELSE 0 END) AS income,\n       SUM(CASE WHEN t.trans_type = 'EXPENSE' THEN t.amount ELSE 0 END) AS expenses\nFROM PF_USERS u\nJOIN PF_ACCOUNT a ON a.user_id = u.user_id\nJOIN PF_TRANSACTION t ON t.account_id = a.account_id\nGROUP BY u.name, TO_CHAR(t.trans_date, 'YYYY-MM')\nORDER BY u.name, period_month"
+  },
+  {
+    "id": "Q11",
+    "title": "Bank-wise total balances including empty banks",
+    "sql": "SELECT b.name AS bank_name, COUNT(a.account_id) AS accounts,\n       NVL(SUM(a.balance), 0) AS total_balance\nFROM PF_BANK b LEFT JOIN PF_ACCOUNT a ON a.bank_id = b.bank_id\nGROUP BY b.bank_id, b.name\nORDER BY total_balance DESC"
+  },
+  {
+    "id": "Q12",
+    "title": "Transaction audit trail maintained by trigger",
+    "sql": "SELECT audit_id, trans_id, action_name,\n       old_amount, new_amount, changed_at\nFROM PF_TRANS_AUDIT\nORDER BY audit_id DESC"
+  }
+]

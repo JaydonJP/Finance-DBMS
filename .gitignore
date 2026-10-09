@@ -1,0 +1,22 @@
+# Database credentials
+.env
+.env.*
+!.env.example
+
+# Python environment
+.venv/
+__pycache__/
+*.pyc
+
+# Editor and temporary files
+.vscode/
+*.log
+
+# College report files
+DA1_ER_Rotated.png
+DA2_Report*
+DA2_Final_Implementation_Report*
+
+# Screenshot archives
+Screenshots/
+*.zip
