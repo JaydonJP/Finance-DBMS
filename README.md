@@ -1,5 +1,22 @@
 # Personal Finance & Investment Management System
 
+## DA3 Neo4j extension
+
+The complete **Finance Graph DA3** implementation is in [`da3/`](da3/README.md).
+It runs independently using Neo4j Community, Flask and Cypher, with complete
+CRUD, 15 reports, an interactive graph explorer, sample data and integration tests.
+
+On the configured Windows PC, double-click `da3/Start DA3.cmd` and open
+**http://127.0.0.1:5001/**. See the [demo guide](da3/DEMO_GUIDE.md) and the
+[submission report](da3/submission/DA3_Report.pdf).
+
+The Oracle DA2 implementation below was originally obtained from
+[bhuvang2026in/Personal-Finance-Management-DBMS](https://github.com/bhuvang2026in/Personal-Finance-Management-DBMS).
+Its original Git history is retained. This repository adds local demo tooling
+and the standalone Neo4j DA3 extension.
+
+## Oracle DA2 implementation
+
 A database management project built using **Oracle SQL, PL/SQL, Python, and Flask**. It provides a local web interface for managing household finances, bank accounts, investments, subscriptions, savings goals, and financial transactions.
 
 Developed as a **DBMS DA2 Implementation Project**, based on an Entity-Relationship (ER) diagram converted into a relational database.

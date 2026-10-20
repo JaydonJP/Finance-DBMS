@@ -11,6 +11,12 @@ __pycache__/
 # Editor and temporary files
 .vscode/
 *.log
+.runtime/
+.oracle.env
+.container.env
+da3/.venv/
+da3/.runtime/
+da3/submission/qa/
 
 # College report files
 DA1_ER_Rotated.png

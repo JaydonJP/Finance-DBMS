@@ -1,0 +1,414 @@
+{
+  "household": [
+    {
+      "household_id": 1,
+      "name": "Kumar Household"
+    },
+    {
+      "household_id": 2,
+      "name": "Rao Household"
+    },
+    {
+      "household_id": 3,
+      "name": "Singh Household"
+    }
+  ],
+  "company": [
+    {
+      "company_id": 201,
+      "name": "Nexa Technologies",
+      "industry": "Information Technology"
+    },
+    {
+      "company_id": 202,
+      "name": "BlueSky Retail",
+      "industry": "Retail"
+    },
+    {
+      "company_id": 203,
+      "name": "GreenWave Energy",
+      "industry": "Renewable Energy"
+    },
+    {
+      "company_id": 204,
+      "name": "Cedar Finance",
+      "industry": "Financial Services"
+    }
+  ],
+  "bank": [
+    {
+      "bank_id": 1,
+      "name": "City Bank",
+      "branch_code": "CHN001"
+    },
+    {
+      "bank_id": 2,
+      "name": "National Bank",
+      "branch_code": "CHN010"
+    },
+    {
+      "bank_id": 3,
+      "name": "Metro Bank",
+      "branch_code": "BLR002"
+    }
+  ],
+  "category": [
+    {
+      "category_id": 1,
+      "name": "Salary"
+    },
+    {
+      "category_id": 2,
+      "name": "Food"
+    },
+    {
+      "category_id": 3,
+      "name": "Utilities"
+    },
+    {
+      "category_id": 4,
+      "name": "Travel"
+    },
+    {
+      "category_id": 5,
+      "name": "Investment"
+    },
+    {
+      "category_id": 6,
+      "name": "Other"
+    },
+    {
+      "category_id": 7,
+      "name": "Emergency Savings"
+    },
+    {
+      "category_id": 8,
+      "name": "Travel Fund"
+    },
+    {
+      "category_id": 9,
+      "name": "Education"
+    }
+  ],
+  "users": [
+    {
+      "user_id": 101,
+      "name": "Arun Kumar",
+      "dob": "2004-05-12",
+      "household_id": 1,
+      "employer_company_id": 201
+    },
+    {
+      "user_id": 102,
+      "name": "Priya Kumar",
+      "dob": "2002-11-21",
+      "household_id": 1,
+      "employer_company_id": 202
+    },
+    {
+      "user_id": 103,
+      "name": "Rahul Rao",
+      "dob": "2003-03-04",
+      "household_id": 2,
+      "employer_company_id": 201
+    },
+    {
+      "user_id": 104,
+      "name": "Meera Singh",
+      "dob": "2005-07-18",
+      "household_id": 3,
+      "employer_company_id": 203
+    },
+    {
+      "user_id": 105,
+      "name": "Dev Rao",
+      "dob": "2001-09-02",
+      "household_id": 2,
+      "employer_company_id": null
+    }
+  ],
+  "account": [
+    {
+      "account_id": 1001,
+      "acc_type": "SAVINGS",
+      "balance": 25000,
+      "user_id": 101,
+      "company_id": null,
+      "bank_id": 1
+    },
+    {
+      "account_id": 1002,
+      "acc_type": "SAVINGS",
+      "balance": 40000,
+      "user_id": 102,
+      "company_id": null,
+      "bank_id": 1
+    },
+    {
+      "account_id": 1003,
+      "acc_type": "SAVINGS",
+      "balance": 8000,
+      "user_id": 103,
+      "company_id": null,
+      "bank_id": 2
+    },
+    {
+      "account_id": 1004,
+      "acc_type": "SAVINGS",
+      "balance": 12000,
+      "user_id": 104,
+      "company_id": null,
+      "bank_id": 2
+    },
+    {
+      "account_id": 1005,
+      "acc_type": "SAVINGS",
+      "balance": 30000,
+      "user_id": 105,
+      "company_id": null,
+      "bank_id": 3
+    },
+    {
+      "account_id": 1006,
+      "acc_type": "CURRENT",
+      "balance": 250000,
+      "user_id": null,
+      "company_id": 201,
+      "bank_id": 3
+    },
+    {
+      "account_id": 1007,
+      "acc_type": "SAVINGS",
+      "balance": 10000,
+      "user_id": 101,
+      "company_id": null,
+      "bank_id": 2
+    }
+  ],
+  "shares": [
+    {
+      "share_id": 301,
+      "company_id": 201,
+      "market_price": 1200
+    },
+    {
+      "share_id": 302,
+      "company_id": 202,
+      "market_price": 650
+    },
+    {
+      "share_id": 303,
+      "company_id": 203,
+      "market_price": 800
+    },
+    {
+      "share_id": 304,
+      "company_id": 201,
+      "market_price": 300
+    }
+  ],
+  "user_shares": [
+    {
+      "user_id": 101,
+      "share_id": 301,
+      "quantity": 3
+    },
+    {
+      "user_id": 101,
+      "share_id": 302,
+      "quantity": 5
+    },
+    {
+      "user_id": 102,
+      "share_id": 302,
+      "quantity": 4
+    },
+    {
+      "user_id": 103,
+      "share_id": 301,
+      "quantity": 2
+    },
+    {
+      "user_id": 104,
+      "share_id": 303,
+      "quantity": 8
+    },
+    {
+      "user_id": 105,
+      "share_id": 304,
+      "quantity": 10
+    }
+  ],
+  "subscription": [
+    {
+      "account_id": 1001,
+      "subscription_id": 1,
+      "name": "Netflix",
+      "bill_cycle": "MONTHLY",
+      "amount": 649
+    },
+    {
+      "account_id": 1001,
+      "subscription_id": 2,
+      "name": "Music Premium",
+      "bill_cycle": "MONTHLY",
+      "amount": 119
+    },
+    {
+      "account_id": 1002,
+      "subscription_id": 1,
+      "name": "Cloud Storage",
+      "bill_cycle": "MONTHLY",
+      "amount": 199
+    },
+    {
+      "account_id": 1004,
+      "subscription_id": 1,
+      "name": "Online Learning",
+      "bill_cycle": "YEARLY",
+      "amount": 2999
+    },
+    {
+      "account_id": 1007,
+      "subscription_id": 1,
+      "name": "Backup Service",
+      "bill_cycle": "MONTHLY",
+      "amount": 99
+    }
+  ],
+  "goal": [
+    {
+      "goal_id": 401,
+      "account_id": 1001,
+      "category_id": 7,
+      "current_amt": 20000,
+      "target_amt": 100000
+    },
+    {
+      "goal_id": 402,
+      "account_id": 1002,
+      "category_id": 8,
+      "current_amt": 10000,
+      "target_amt": 50000
+    },
+    {
+      "goal_id": 403,
+      "account_id": 1004,
+      "category_id": 9,
+      "current_amt": 15000,
+      "target_amt": 120000
+    },
+    {
+      "goal_id": 404,
+      "account_id": 1005,
+      "category_id": 7,
+      "current_amt": 30000,
+      "target_amt": 40000
+    },
+    {
+      "goal_id": 405,
+      "account_id": 1001,
+      "category_id": 8,
+      "current_amt": 5000,
+      "target_amt": 25000
+    }
+  ],
+  "transaction": [
+    {
+      "trans_id": 1,
+      "account_id": 1001,
+      "category_id": 1,
+      "trans_date": "2026-10-01",
+      "trans_type": "INCOME",
+      "amount": 50000
+    },
+    {
+      "trans_id": 2,
+      "account_id": 1001,
+      "category_id": 2,
+      "trans_date": "2026-10-02",
+      "trans_type": "EXPENSE",
+      "amount": 4500
+    },
+    {
+      "trans_id": 3,
+      "account_id": 1001,
+      "category_id": 3,
+      "trans_date": "2026-10-03",
+      "trans_type": "EXPENSE",
+      "amount": 2500
+    },
+    {
+      "trans_id": 4,
+      "account_id": 1002,
+      "category_id": 1,
+      "trans_date": "2026-10-01",
+      "trans_type": "INCOME",
+      "amount": 60000
+    },
+    {
+      "trans_id": 5,
+      "account_id": 1002,
+      "category_id": 4,
+      "trans_date": "2026-10-04",
+      "trans_type": "EXPENSE",
+      "amount": 10000
+    },
+    {
+      "trans_id": 6,
+      "account_id": 1003,
+      "category_id": 2,
+      "trans_date": "2026-10-04",
+      "trans_type": "EXPENSE",
+      "amount": 1500
+    },
+    {
+      "trans_id": 7,
+      "account_id": 1004,
+      "category_id": 1,
+      "trans_date": "2026-10-02",
+      "trans_type": "INCOME",
+      "amount": 30000
+    },
+    {
+      "trans_id": 8,
+      "account_id": 1004,
+      "category_id": 3,
+      "trans_date": "2026-10-05",
+      "trans_type": "EXPENSE",
+      "amount": 5000
+    },
+    {
+      "trans_id": 9,
+      "account_id": 1005,
+      "category_id": 4,
+      "trans_date": "2026-10-06",
+      "trans_type": "EXPENSE",
+      "amount": 2000
+    },
+    {
+      "trans_id": 10,
+      "account_id": 1007,
+      "category_id": 5,
+      "trans_date": "2026-10-06",
+      "trans_type": "EXPENSE",
+      "amount": 3000
+    },
+    {
+      "trans_id": 11,
+      "account_id": 1006,
+      "category_id": 1,
+      "trans_date": "2026-10-07",
+      "trans_type": "EXPENSE",
+      "amount": 50000
+    },
+    {
+      "trans_id": 12,
+      "account_id": 1001,
+      "category_id": 2,
+      "trans_date": "2026-10-07",
+      "trans_type": "EXPENSE",
+      "amount": 1200
+    }
+  ]
+}

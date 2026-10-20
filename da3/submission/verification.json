@@ -1,0 +1,656 @@
+{
+  "status": "PASS",
+  "tested_at": "2026-10-20T13:21:18.658729+05:30",
+  "duration_seconds": 11.88,
+  "database": "Neo4j Community 2026.09.0",
+  "checks": [
+    {
+      "name": "Standalone sample import and reconciliation",
+      "status": "PASS",
+      "detail": "57 business nodes, 72 relationships, 12 ledger records; account 1001 = INR 66800.00"
+    },
+    {
+      "name": "Repeat import preserves data",
+      "status": "PASS",
+      "detail": "No duplicate nodes/relationships or repeated balance effects"
+    },
+    {
+      "name": "Web pages and CSRF protection",
+      "status": "PASS",
+      "detail": "All 11 collection pages and forms return 200; unknown resources and missing CSRF are rejected"
+    },
+    {
+      "name": "All 15 Cypher reports and graph APIs",
+      "status": "PASS",
+      "detail": "12 core reports, 3 graph insights; G01=4 rows, G02=4 rows, G03=2 rows; expense total INR 79700"
+    },
+    {
+      "name": "CRUD across all 11 collections",
+      "status": "PASS",
+      "detail": "All create and edit forms persist against Neo4j, including HOLDS relationship properties"
+    },
+    {
+      "name": "Validation and restricted deletion",
+      "status": "PASS",
+      "detail": "Duplicate IDs, non-finite/negative/zero/overprecision amounts, dual owners and referenced-user deletion are rejected"
+    },
+    {
+      "name": "Ledger lifecycle and permanent audit",
+      "status": "PASS",
+      "detail": "Expense 250 -> expense 300 -> income 500 -> move to another account -> delete; both balances restored and 5 audit snapshots retained"
+    },
+    {
+      "name": "Atomic rollback",
+      "status": "PASS",
+      "detail": "Overspending and a missing category leave balances, transactions and audit counts unchanged"
+    },
+    {
+      "name": "Concurrent overspending protection",
+      "status": "PASS",
+      "detail": "Two simultaneous INR 700 expenses against INR 980: exactly one commits; final balance INR 280"
+    },
+    {
+      "name": "Cleanup and final reconciliation",
+      "status": "PASS",
+      "detail": "Temporary records removed in dependency order; original sample dataset and balances retained"
+    },
+    {
+      "name": "Stop and restart persistence",
+      "status": "PASS",
+      "detail": "Neo4j and Waitress stop/start succeeded; all original users, ledger entries and balances persisted"
+    },
+    {
+      "name": "Browser interaction",
+      "status": "PASS",
+      "detail": "Live browser create-user form, success message, graph insight selection and node inspector verified; temporary user removed"
+    }
+  ],
+  "counts": {
+    "household": 3,
+    "company": 4,
+    "bank": 3,
+    "category": 9,
+    "users": 5,
+    "account": 7,
+    "shares": 4,
+    "user_shares": 6,
+    "subscription": 5,
+    "goal": 5,
+    "transaction": 12
+  },
+  "reports": {
+    "Q01": [
+      {
+        "household": "Kumar Household",
+        "member": "Arun Kumar",
+        "age": 22
+      },
+      {
+        "household": "Kumar Household",
+        "member": "Priya Kumar",
+        "age": 23
+      },
+      {
+        "household": "Rao Household",
+        "member": "Dev Rao",
+        "age": 25
+      },
+      {
+        "household": "Rao Household",
+        "member": "Rahul Rao",
+        "age": 23
+      },
+      {
+        "household": "Singh Household",
+        "member": "Meera Singh",
+        "age": 21
+      }
+    ],
+    "Q02": [
+      {
+        "account_id": 1001,
+        "owner": "Arun Kumar",
+        "owner_type": "User",
+        "bank": "City Bank",
+        "type": "SAVINGS",
+        "balance_rupees": 66800.0
+      },
+      {
+        "account_id": 1002,
+        "owner": "Priya Kumar",
+        "owner_type": "User",
+        "bank": "City Bank",
+        "type": "SAVINGS",
+        "balance_rupees": 90000.0
+      },
+      {
+        "account_id": 1003,
+        "owner": "Rahul Rao",
+        "owner_type": "User",
+        "bank": "National Bank",
+        "type": "SAVINGS",
+        "balance_rupees": 6500.0
+      },
+      {
+        "account_id": 1004,
+        "owner": "Meera Singh",
+        "owner_type": "User",
+        "bank": "National Bank",
+        "type": "SAVINGS",
+        "balance_rupees": 37000.0
+      },
+      {
+        "account_id": 1005,
+        "owner": "Dev Rao",
+        "owner_type": "User",
+        "bank": "Metro Bank",
+        "type": "SAVINGS",
+        "balance_rupees": 28000.0
+      },
+      {
+        "account_id": 1006,
+        "owner": "Nexa Technologies",
+        "owner_type": "Company",
+        "bank": "Metro Bank",
+        "type": "CURRENT",
+        "balance_rupees": 200000.0
+      },
+      {
+        "account_id": 1007,
+        "owner": "Arun Kumar",
+        "owner_type": "User",
+        "bank": "National Bank",
+        "type": "SAVINGS",
+        "balance_rupees": 7000.0
+      }
+    ],
+    "Q03": [
+      {
+        "investor": "Arun Kumar",
+        "company": "BlueSky Retail",
+        "share_id": 302,
+        "quantity": 5,
+        "price_rupees": 650.0,
+        "value_rupees": 3250.0
+      },
+      {
+        "investor": "Arun Kumar",
+        "company": "Nexa Technologies",
+        "share_id": 301,
+        "quantity": 3,
+        "price_rupees": 1200.0,
+        "value_rupees": 3600.0
+      },
+      {
+        "investor": "Dev Rao",
+        "company": "Nexa Technologies",
+        "share_id": 304,
+        "quantity": 10,
+        "price_rupees": 300.0,
+        "value_rupees": 3000.0
+      },
+      {
+        "investor": "Meera Singh",
+        "company": "GreenWave Energy",
+        "share_id": 303,
+        "quantity": 8,
+        "price_rupees": 800.0,
+        "value_rupees": 6400.0
+      },
+      {
+        "investor": "Priya Kumar",
+        "company": "BlueSky Retail",
+        "share_id": 302,
+        "quantity": 4,
+        "price_rupees": 650.0,
+        "value_rupees": 2600.0
+      },
+      {
+        "investor": "Rahul Rao",
+        "company": "Nexa Technologies",
+        "share_id": 301,
+        "quantity": 2,
+        "price_rupees": 1200.0,
+        "value_rupees": 2400.0
+      }
+    ],
+    "Q04": [
+      {
+        "category": "Salary",
+        "transactions": 1,
+        "spent_rupees": 50000.0
+      },
+      {
+        "category": "Travel",
+        "transactions": 2,
+        "spent_rupees": 12000.0
+      },
+      {
+        "category": "Utilities",
+        "transactions": 2,
+        "spent_rupees": 7500.0
+      },
+      {
+        "category": "Food",
+        "transactions": 3,
+        "spent_rupees": 7200.0
+      },
+      {
+        "category": "Investment",
+        "transactions": 1,
+        "spent_rupees": 3000.0
+      }
+    ],
+    "Q05": [
+      {
+        "account_id": 1006,
+        "balance_rupees": 200000.0
+      },
+      {
+        "account_id": 1002,
+        "balance_rupees": 90000.0
+      },
+      {
+        "account_id": 1001,
+        "balance_rupees": 66800.0
+      }
+    ],
+    "Q06": [
+      {
+        "goal_id": 404,
+        "goal": "Emergency Savings",
+        "saved_rupees": 30000.0,
+        "target_rupees": 40000.0,
+        "progress_percent": 75.0
+      },
+      {
+        "goal_id": 401,
+        "goal": "Emergency Savings",
+        "saved_rupees": 20000.0,
+        "target_rupees": 100000.0,
+        "progress_percent": 20.0
+      },
+      {
+        "goal_id": 402,
+        "goal": "Travel Fund",
+        "saved_rupees": 10000.0,
+        "target_rupees": 50000.0,
+        "progress_percent": 20.0
+      },
+      {
+        "goal_id": 405,
+        "goal": "Travel Fund",
+        "saved_rupees": 5000.0,
+        "target_rupees": 25000.0,
+        "progress_percent": 20.0
+      },
+      {
+        "goal_id": 403,
+        "goal": "Education",
+        "saved_rupees": 15000.0,
+        "target_rupees": 120000.0,
+        "progress_percent": 12.5
+      }
+    ],
+    "Q07": [
+      {
+        "account_id": 1001,
+        "subscriptions": 2,
+        "monthly_rupees": 768.0
+      },
+      {
+        "account_id": 1004,
+        "subscriptions": 1,
+        "monthly_rupees": 249.92
+      },
+      {
+        "account_id": 1002,
+        "subscriptions": 1,
+        "monthly_rupees": 199.0
+      },
+      {
+        "account_id": 1007,
+        "subscriptions": 1,
+        "monthly_rupees": 99.0
+      }
+    ],
+    "Q08": [
+      {
+        "company": "Nexa Technologies",
+        "employees": 2
+      },
+      {
+        "company": "BlueSky Retail",
+        "employees": 1
+      },
+      {
+        "company": "GreenWave Energy",
+        "employees": 1
+      },
+      {
+        "company": "Cedar Finance",
+        "employees": 0
+      }
+    ],
+    "Q09": [
+      {
+        "account_id": 1001,
+        "trans_id": 2,
+        "category": "Food",
+        "amount_rupees": 4500.0
+      },
+      {
+        "account_id": 1002,
+        "trans_id": 5,
+        "category": "Travel",
+        "amount_rupees": 10000.0
+      },
+      {
+        "account_id": 1003,
+        "trans_id": 6,
+        "category": "Food",
+        "amount_rupees": 1500.0
+      },
+      {
+        "account_id": 1004,
+        "trans_id": 8,
+        "category": "Utilities",
+        "amount_rupees": 5000.0
+      },
+      {
+        "account_id": 1005,
+        "trans_id": 9,
+        "category": "Travel",
+        "amount_rupees": 2000.0
+      },
+      {
+        "account_id": 1006,
+        "trans_id": 11,
+        "category": "Salary",
+        "amount_rupees": 50000.0
+      },
+      {
+        "account_id": 1007,
+        "trans_id": 10,
+        "category": "Investment",
+        "amount_rupees": 3000.0
+      }
+    ],
+    "Q10": [
+      {
+        "member": "Arun Kumar",
+        "month": "2026-10",
+        "income_rupees": 50000.0,
+        "expenses_rupees": 11200.0
+      },
+      {
+        "member": "Dev Rao",
+        "month": "2026-10",
+        "income_rupees": 0.0,
+        "expenses_rupees": 2000.0
+      },
+      {
+        "member": "Meera Singh",
+        "month": "2026-10",
+        "income_rupees": 30000.0,
+        "expenses_rupees": 5000.0
+      },
+      {
+        "member": "Priya Kumar",
+        "month": "2026-10",
+        "income_rupees": 60000.0,
+        "expenses_rupees": 10000.0
+      },
+      {
+        "member": "Rahul Rao",
+        "month": "2026-10",
+        "income_rupees": 0.0,
+        "expenses_rupees": 1500.0
+      }
+    ],
+    "Q11": [
+      {
+        "bank": "Metro Bank",
+        "accounts": 2,
+        "total_rupees": 228000.0
+      },
+      {
+        "bank": "City Bank",
+        "accounts": 2,
+        "total_rupees": 156800.0
+      },
+      {
+        "bank": "National Bank",
+        "accounts": 3,
+        "total_rupees": 50500.0
+      }
+    ],
+    "Q12": [
+      {
+        "transaction_id": 12,
+        "action": "INSERT",
+        "old_rupees": null,
+        "new_rupees": 1200.0,
+        "old_account": null,
+        "new_account": 1001,
+        "changed_at": "2026-10-20T07:46:17.005Z"
+      },
+      {
+        "transaction_id": 11,
+        "action": "INSERT",
+        "old_rupees": null,
+        "new_rupees": 50000.0,
+        "old_account": null,
+        "new_account": 1006,
+        "changed_at": "2026-10-20T07:46:16.95Z"
+      },
+      {
+        "transaction_id": 10,
+        "action": "INSERT",
+        "old_rupees": null,
+        "new_rupees": 3000.0,
+        "old_account": null,
+        "new_account": 1007,
+        "changed_at": "2026-10-20T07:46:15.3Z"
+      },
+      {
+        "transaction_id": 9,
+        "action": "INSERT",
+        "old_rupees": null,
+        "new_rupees": 2000.0,
+        "old_account": null,
+        "new_account": 1005,
+        "changed_at": "2026-10-20T07:46:15.061Z"
+      },
+      {
+        "transaction_id": 8,
+        "action": "INSERT",
+        "old_rupees": null,
+        "new_rupees": 5000.0,
+        "old_account": null,
+        "new_account": 1004,
+        "changed_at": "2026-10-20T07:46:15.018Z"
+      },
+      {
+        "transaction_id": 7,
+        "action": "INSERT",
+        "old_rupees": null,
+        "new_rupees": 30000.0,
+        "old_account": null,
+        "new_account": 1004,
+        "changed_at": "2026-10-20T07:46:14.976Z"
+      },
+      {
+        "transaction_id": 6,
+        "action": "INSERT",
+        "old_rupees": null,
+        "new_rupees": 1500.0,
+        "old_account": null,
+        "new_account": 1003,
+        "changed_at": "2026-10-20T07:46:14.929Z"
+      },
+      {
+        "transaction_id": 5,
+        "action": "INSERT",
+        "old_rupees": null,
+        "new_rupees": 10000.0,
+        "old_account": null,
+        "new_account": 1002,
+        "changed_at": "2026-10-20T07:46:14.874Z"
+      },
+      {
+        "transaction_id": 4,
+        "action": "INSERT",
+        "old_rupees": null,
+        "new_rupees": 60000.0,
+        "old_account": null,
+        "new_account": 1002,
+        "changed_at": "2026-10-20T07:46:14.829Z"
+      },
+      {
+        "transaction_id": 3,
+        "action": "INSERT",
+        "old_rupees": null,
+        "new_rupees": 2500.0,
+        "old_account": null,
+        "new_account": 1001,
+        "changed_at": "2026-10-20T07:46:14.765Z"
+      },
+      {
+        "transaction_id": 2,
+        "action": "INSERT",
+        "old_rupees": null,
+        "new_rupees": 4500.0,
+        "old_account": null,
+        "new_account": 1001,
+        "changed_at": "2026-10-20T07:46:14.713Z"
+      },
+      {
+        "transaction_id": 1,
+        "action": "INSERT",
+        "old_rupees": null,
+        "new_rupees": 50000.0,
+        "old_account": null,
+        "new_account": 1001,
+        "changed_at": "2026-10-20T07:46:14.585Z"
+      }
+    ],
+    "G01": [
+      {
+        "member": "Arun Kumar",
+        "employer": "Nexa Technologies",
+        "share_id": 301,
+        "investment_rupees": 3600.0
+      },
+      {
+        "member": "Meera Singh",
+        "employer": "GreenWave Energy",
+        "share_id": 303,
+        "investment_rupees": 6400.0
+      },
+      {
+        "member": "Priya Kumar",
+        "employer": "BlueSky Retail",
+        "share_id": 302,
+        "investment_rupees": 2600.0
+      },
+      {
+        "member": "Rahul Rao",
+        "employer": "Nexa Technologies",
+        "share_id": 301,
+        "investment_rupees": 2400.0
+      }
+    ],
+    "G02": [
+      {
+        "household": "Kumar Household",
+        "company": "BlueSky Retail",
+        "investors": [
+          "Priya Kumar",
+          "Arun Kumar"
+        ],
+        "exposure_rupees": 5850.0
+      },
+      {
+        "household": "Kumar Household",
+        "company": "Nexa Technologies",
+        "investors": [
+          "Arun Kumar"
+        ],
+        "exposure_rupees": 3600.0
+      },
+      {
+        "household": "Rao Household",
+        "company": "Nexa Technologies",
+        "investors": [
+          "Rahul Rao",
+          "Dev Rao"
+        ],
+        "exposure_rupees": 5400.0
+      },
+      {
+        "household": "Singh Household",
+        "company": "GreenWave Energy",
+        "investors": [
+          "Meera Singh"
+        ],
+        "exposure_rupees": 6400.0
+      }
+    ],
+    "G03": [
+      {
+        "member_one": "Arun Kumar",
+        "member_two": "Priya Kumar",
+        "shared_shares": [
+          302
+        ],
+        "shared_count": 1
+      },
+      {
+        "member_one": "Arun Kumar",
+        "member_two": "Rahul Rao",
+        "shared_shares": [
+          301
+        ],
+        "shared_count": 1
+      }
+    ]
+  },
+  "reconciliation": [
+    {
+      "account_id": 1001,
+      "actual_paise": 6680000,
+      "expected_paise": 6680000
+    },
+    {
+      "account_id": 1002,
+      "actual_paise": 9000000,
+      "expected_paise": 9000000
+    },
+    {
+      "account_id": 1003,
+      "actual_paise": 650000,
+      "expected_paise": 650000
+    },
+    {
+      "account_id": 1004,
+      "actual_paise": 3700000,
+      "expected_paise": 3700000
+    },
+    {
+      "account_id": 1005,
+      "actual_paise": 2800000,
+      "expected_paise": 2800000
+    },
+    {
+      "account_id": 1006,
+      "actual_paise": 20000000,
+      "expected_paise": 20000000
+    },
+    {
+      "account_id": 1007,
+      "actual_paise": 700000,
+      "expected_paise": 700000
+    }
+  ]
+}

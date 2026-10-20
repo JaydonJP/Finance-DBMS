@@ -1,0 +1,404 @@
+{
+  "household": {
+    "table": "PF_HOUSEHOLD",
+    "title": "Households",
+    "keys": [
+      "household_id"
+    ],
+    "fields": [
+      [
+        "household_id",
+        "Household ID",
+        "int",
+        true,
+        false
+      ],
+      [
+        "name",
+        "Name",
+        "text",
+        true,
+        true
+      ]
+    ]
+  },
+  "company": {
+    "table": "PF_COMPANY",
+    "title": "Companies",
+    "keys": [
+      "company_id"
+    ],
+    "fields": [
+      [
+        "company_id",
+        "Company ID",
+        "int",
+        true,
+        false
+      ],
+      [
+        "name",
+        "Name",
+        "text",
+        true,
+        true
+      ],
+      [
+        "industry",
+        "Industry",
+        "text",
+        true,
+        true
+      ]
+    ]
+  },
+  "bank": {
+    "table": "PF_BANK",
+    "title": "Banks",
+    "keys": [
+      "bank_id"
+    ],
+    "fields": [
+      [
+        "bank_id",
+        "Bank ID",
+        "int",
+        true,
+        false
+      ],
+      [
+        "name",
+        "Name",
+        "text",
+        true,
+        true
+      ],
+      [
+        "branch_code",
+        "Branch Code",
+        "text",
+        true,
+        true
+      ]
+    ]
+  },
+  "category": {
+    "table": "PF_CATEGORY",
+    "title": "Categories",
+    "keys": [
+      "category_id"
+    ],
+    "fields": [
+      [
+        "category_id",
+        "Category ID",
+        "int",
+        true,
+        false
+      ],
+      [
+        "name",
+        "Name",
+        "text",
+        true,
+        true
+      ]
+    ]
+  },
+  "users": {
+    "table": "PF_USERS",
+    "title": "Users",
+    "keys": [
+      "user_id"
+    ],
+    "fields": [
+      [
+        "user_id",
+        "User ID",
+        "int",
+        true,
+        false
+      ],
+      [
+        "name",
+        "Name",
+        "text",
+        true,
+        true
+      ],
+      [
+        "dob",
+        "Date of Birth",
+        "date",
+        true,
+        true
+      ],
+      [
+        "household_id",
+        "Household ID (FK)",
+        "int",
+        true,
+        true
+      ],
+      [
+        "employer_company_id",
+        "Employer Company ID (optional)",
+        "int",
+        false,
+        true
+      ]
+    ]
+  },
+  "account": {
+    "table": "PF_ACCOUNT",
+    "title": "Accounts",
+    "keys": [
+      "account_id"
+    ],
+    "fields": [
+      [
+        "account_id",
+        "Account ID",
+        "int",
+        true,
+        false
+      ],
+      [
+        "acc_type",
+        "Type: SAVINGS or CURRENT",
+        "text",
+        true,
+        true
+      ],
+      [
+        "balance",
+        "Opening Balance (set only at creation)",
+        "money",
+        true,
+        false
+      ],
+      [
+        "user_id",
+        "User ID (personal, or blank)",
+        "int",
+        false,
+        true
+      ],
+      [
+        "company_id",
+        "Company ID (corporate, or blank)",
+        "int",
+        false,
+        true
+      ],
+      [
+        "bank_id",
+        "Bank ID",
+        "int",
+        true,
+        true
+      ]
+    ]
+  },
+  "shares": {
+    "table": "PF_SHARES",
+    "title": "Shares",
+    "keys": [
+      "share_id"
+    ],
+    "fields": [
+      [
+        "share_id",
+        "Share ID",
+        "int",
+        true,
+        false
+      ],
+      [
+        "company_id",
+        "Listed Company ID",
+        "int",
+        true,
+        true
+      ],
+      [
+        "market_price",
+        "Market Price",
+        "money",
+        true,
+        true
+      ]
+    ]
+  },
+  "user_shares": {
+    "table": "PF_USER_SHARES",
+    "title": "Share Ownership",
+    "keys": [
+      "user_id",
+      "share_id"
+    ],
+    "fields": [
+      [
+        "user_id",
+        "User ID",
+        "int",
+        true,
+        false
+      ],
+      [
+        "share_id",
+        "Share ID",
+        "int",
+        true,
+        false
+      ],
+      [
+        "quantity",
+        "Quantity",
+        "int",
+        true,
+        true
+      ]
+    ]
+  },
+  "subscription": {
+    "table": "PF_SUBSCRIPTION",
+    "title": "Subscriptions",
+    "keys": [
+      "account_id",
+      "subscription_id"
+    ],
+    "fields": [
+      [
+        "account_id",
+        "Account ID",
+        "int",
+        true,
+        false
+      ],
+      [
+        "subscription_id",
+        "Subscription ID within account",
+        "int",
+        true,
+        false
+      ],
+      [
+        "name",
+        "Subscription Name",
+        "text",
+        true,
+        true
+      ],
+      [
+        "bill_cycle",
+        "Cycle: WEEKLY / MONTHLY / YEARLY",
+        "text",
+        true,
+        true
+      ],
+      [
+        "amount",
+        "Bill Amount",
+        "money",
+        true,
+        true
+      ]
+    ]
+  },
+  "goal": {
+    "table": "PF_GOAL",
+    "title": "Goals",
+    "keys": [
+      "goal_id"
+    ],
+    "fields": [
+      [
+        "goal_id",
+        "Goal ID",
+        "int",
+        true,
+        false
+      ],
+      [
+        "account_id",
+        "Account ID",
+        "int",
+        true,
+        true
+      ],
+      [
+        "category_id",
+        "Category ID",
+        "int",
+        true,
+        true
+      ],
+      [
+        "current_amt",
+        "Current Goal Savings",
+        "money",
+        true,
+        true
+      ],
+      [
+        "target_amt",
+        "Target Savings",
+        "money",
+        true,
+        true
+      ]
+    ]
+  },
+  "transaction": {
+    "table": "PF_TRANSACTION",
+    "title": "Transactions",
+    "keys": [
+      "trans_id"
+    ],
+    "fields": [
+      [
+        "trans_id",
+        "Transaction ID",
+        "int",
+        true,
+        false
+      ],
+      [
+        "account_id",
+        "Account ID",
+        "int",
+        true,
+        true
+      ],
+      [
+        "category_id",
+        "Category ID",
+        "int",
+        true,
+        true
+      ],
+      [
+        "trans_date",
+        "Transaction Date",
+        "date",
+        true,
+        true
+      ],
+      [
+        "trans_type",
+        "Type: INCOME or EXPENSE",
+        "text",
+        true,
+        true
+      ],
+      [
+        "amount",
+        "Amount",
+        "money",
+        true,
+        true
+      ]
+    ]
+  }
+}
