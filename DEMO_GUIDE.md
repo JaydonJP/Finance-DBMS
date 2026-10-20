@@ -1,7 +1,9 @@
 # Run your finance DBMS demo
 
-This PC uses the original Oracle database and PL/SQL implementation. Flask runs
-in Windows; Oracle Database Free runs in a Podman container inside Ubuntu WSL.
+DA2 uses the original Oracle database and PL/SQL implementation. Flask runs in
+Windows. In local mode, Oracle Database Free runs in a Podman container inside
+Ubuntu WSL. In shared mode, Flask connects to the configured external Oracle
+project schema. See `SHARED_ORACLE.md` for connecting two laptops.
 
 ## Start and stop
 
@@ -12,9 +14,18 @@ in Windows; Oracle Database Free runs in a Podman container inside Ubuntu WSL.
 4. Double-click **Stop Demo.cmd** when finished to release database memory.
 
 The launcher works after a Windows restart. It preserves your records and does
-not repeat the seed inserts. After setup, normal use needs no Internet connection.
+not repeat the seed inserts. Local mode needs no Internet connection after setup.
+Shared mode needs a working network connection to the host laptop and a running
+Oracle container on that host. It never initializes or seeds the shared database.
 Keep this folder and its `.venv`, `.env` and `.oracle.env` files together. Oracle
-data is stored separately in the WSL volume `pf-demo-oracle-data`.
+local data is stored separately in the WSL volume `pf-demo-oracle-data`.
+
+To select a shared database, run **Connect Shared Oracle.cmd** and enter its
+host, service, project username and password. The password stays in the local
+ignored `.env` file. To return to the saved local database, run
+**Use Local Oracle.cmd**. Selecting the shared database does not merge local
+records into it. Both laptops must use the same database service and schema;
+refresh a page after the other laptop commits a change.
 
 ## Suggested presentation (5 minutes)
 

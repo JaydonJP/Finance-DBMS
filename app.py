@@ -5,6 +5,7 @@ Never host this classroom admin interface on the public internet (no login/CSRF)
 """
 import os
 import json
+import hashlib
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
@@ -81,7 +82,13 @@ def get_connection():
     dsn = os.environ.get('ORACLE_DSN')
     if not all([user, password, dsn]):
         raise RuntimeError('Configure ORACLE_USER, ORACLE_PASSWORD, and ORACLE_DSN in .env first')
-    return oracledb.connect(user=user, password=password, dsn=dsn)
+    return oracledb.connect(user=user, password=password, dsn=dsn, tcp_connect_timeout=8)
+
+
+def connection_id():
+    """Identify the selected database without exposing its host or credentials."""
+    return hashlib.sha256((os.getenv('ORACLE_DSN', '') + '\0' +
+                           os.getenv('ORACLE_USER', '')).encode()).hexdigest()[:16]
 
 
 def rows_to_dicts(cur):
@@ -179,7 +186,8 @@ def db_check():
                 schema = cur.fetchone()[0]
                 cur.execute('SELECT COUNT(*) FROM PF_USERS')
                 count = cur.fetchone()[0]
-        return jsonify(status='ok', component='oracle', schema=schema, users=count)
+        return jsonify(status='ok', component='oracle', schema=schema, users=count,
+                       connection_id=connection_id())
     except (oracledb.Error, RuntimeError) as exc:
         return jsonify(status='error', component='oracle', detail=str(exc)), 503
 

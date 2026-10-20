@@ -6,9 +6,11 @@ from pathlib import Path
 import subprocess
 import sys
 import time
+import hashlib
 from urllib.error import URLError
 from urllib.request import urlopen
 import webbrowser
+from dotenv import dotenv_values
 
 ROOT = Path(__file__).resolve().parent
 RUNTIME = ROOT / '.runtime'
@@ -25,9 +27,27 @@ def healthy():
     try:
         with urlopen(URL + '/db-check', timeout=3) as response:
             result = json.load(response)
-            return result.get('status') == 'ok' and result.get('schema') == 'PF_DA2'
+            config = dotenv_values(ROOT / '.env')
+            expected = hashlib.sha256((config.get('ORACLE_DSN', '') + '\0' +
+                                       config.get('ORACLE_USER', '')).encode()).hexdigest()[:16]
+            return result.get('status') == 'ok' and result.get('connection_id') == expected
     except (OSError, URLError, ValueError):
         return False
+
+
+def stop_owned_server():
+    """Restart only this project's Flask process when the database changes."""
+    pidfile = RUNTIME / 'flask.pid'
+    if not pidfile.exists():
+        return
+    pid = int(pidfile.read_text())
+    app_path = str(ROOT / 'app.py').replace("'", "''")
+    script = (f"$p=Get-CimInstance Win32_Process -Filter 'ProcessId={pid}'; "
+              f"if ($p -and $p.CommandLine.Contains('{app_path}')) "
+              f"{{ Stop-Process -Id {pid} -ErrorAction Stop }}")
+    subprocess.run(['powershell.exe', '-NoProfile', '-Command', script], check=True,
+                   capture_output=True)
+    pidfile.unlink(missing_ok=True)
 
 
 def start(open_browser=True):
@@ -38,15 +58,19 @@ def start(open_browser=True):
         if open_browser:
             webbrowser.open(URL)
         return
-    print('Starting Oracle in Ubuntu WSL. Please wait...', flush=True)
-    # An active WSL session keeps the database available while this terminal closes.
-    keeper = subprocess.Popen(
-        ['wsl.exe', '-d', 'Ubuntu', '-u', 'root', '--', 'sleep', 'infinity'],
-        creationflags=subprocess.CREATE_NO_WINDOW)
-    (RUNTIME / 'wsl.pid').write_text(str(keeper.pid))
-    wsl('podman', 'start', CONTAINER)
+    config = dotenv_values(ROOT / '.env')
+    remote = config.get('ORACLE_MODE', 'local').lower() == 'remote'
+    if remote:
+        print('Connecting to the shared Oracle database...', flush=True)
+    else:
+        print('Starting Oracle in Ubuntu WSL. Please wait...', flush=True)
+        keeper = subprocess.Popen(
+            ['wsl.exe', '-d', 'Ubuntu', '-u', 'root', '--', 'sleep', 'infinity'],
+            creationflags=subprocess.CREATE_NO_WINDOW)
+        (RUNTIME / 'wsl.pid').write_text(str(keeper.pid))
+        wsl('podman', 'start', CONTAINER)
     from app import get_connection
-    deadline = time.monotonic() + 300
+    deadline = time.monotonic() + (20 if remote else 300)
     while True:
         try:
             with get_connection():
@@ -55,14 +79,21 @@ def start(open_browser=True):
             if time.monotonic() >= deadline:
                 raise RuntimeError('Oracle did not become ready. See DEMO_GUIDE.md for diagnostics.')
             time.sleep(3)
-    from setup_database import initialize
-    initialize()
+    if remote:
+        # Shared databases are validated read-only. Never seed somebody else's store.
+        from configure_oracle import verify_schema
+        with get_connection() as conn:
+            verify_schema(conn)
+    else:
+        from setup_database import initialize
+        initialize()
     if healthy():
         print('Demo ready:', URL)
         if open_browser:
             webbrowser.open(URL)
         return
     print('Oracle is ready. Starting the website...', flush=True)
+    stop_owned_server()
     with (RUNTIME / 'flask.log').open('a', encoding='utf-8') as log:
         server = subprocess.Popen([sys.executable, str(ROOT / 'app.py')],
                                   cwd=ROOT, stdout=log, stderr=log,

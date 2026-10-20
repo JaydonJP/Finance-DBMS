@@ -17,6 +17,12 @@ and the standalone Neo4j DA3 extension.
 
 ## Oracle DA2 implementation
 
+DA2 supports both a local Oracle container and a shared Oracle project schema.
+Use `Connect Shared Oracle.cmd` to validate a shared connection and enter its
+password privately. Use `Use Local Oracle.cmd` to restore the saved local setup.
+See [sharing one Oracle database between laptops](SHARED_ORACLE.md). Local
+passwords and connection backups are excluded from Git.
+
 A database management project built using **Oracle SQL, PL/SQL, Python, and Flask**. It provides a local web interface for managing household finances, bank accounts, investments, subscriptions, savings goals, and financial transactions.
 
 Developed as a **DBMS DA2 Implementation Project**, based on an Entity-Relationship (ER) diagram converted into a relational database.
